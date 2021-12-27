@@ -16,7 +16,7 @@ const FILMS_TITLES = [
 
 const AUTHORS =[
   'Igor Akinfeev','Kirill Nababkin', 'Mario Fernandes', 'Harry Kane', 'Daniil Medvedev'
-]
+];
 
 const WRITERS=[
   'Babar Ahmed','Lewis Allen','Lindsay Anderson','Michael Anderson','Michael Apted',
@@ -28,7 +28,7 @@ const ACTORS = [
   'Tom Hiddleston',
   'Ewan McGregor',
   'Henry Cavill',
-]
+];
 const FILMS_POSTERS = [
   'made-for-each-other.png',
   'popeye-meets-sinbad.png',
@@ -62,7 +62,7 @@ const FILSM_GENRES = [
 ];
 
 const COUNTRY =[
-'USA', 'Russia', 'China', 'France', 'England', 'Germany',
+  'USA', 'Russia', 'China', 'France', 'England', 'Germany',
 ];
 export const generateRandom = (array) => {
   const randomIndex = getRandomInteger(0, array.length - 1);
@@ -82,16 +82,16 @@ const randomArray = (array) => {
 const generateDescriptions = () => {
   const DESCRIPTIONS_MAX = 5;
   const DESCRIPTIONS_MIN = 0;
-  const descriptions_array = [];
+  const descriptionsArray = [];
   for (
     let i = 0;
     i < getRandomInteger(DESCRIPTIONS_MAX, DESCRIPTIONS_MIN);
     i++
   ) {
-    descriptions_array.push(generateRandom(FILSM_DESCRIPTIONS));
+    descriptionsArray.push(generateRandom(FILSM_DESCRIPTIONS));
   }
 
-  const description = descriptions_array.join(' ');
+  const description = descriptionsArray.join(' ');
 
   return description;
 };
@@ -99,25 +99,25 @@ const generateDescriptions = () => {
 const generateRating=() =>{
   const rating = `${getRandomInteger(1, 9)}.${getRandomInteger(1, 9)}`;
   return rating;
-}
+};
 const generateDuration = () => {
   const duration = `${getRandomInteger(1, 3)}h ${getRandomInteger(0, 59)}m`;
   return duration;
 };
 
-const commentionEmotions = ["smile", "sleeping", "puke", "angry"]
+const commentionEmotions = ['smile', 'sleeping', 'puke', 'angry'];
 
 const generateComments = () => ({
-id: getRandomInteger(0,100),
-author: generateRandom(AUTHORS),
+  id: getRandomInteger(0,100),
+  author: generateRandom(AUTHORS),
   comment: generateDescriptions(),
-  date: "2019-05-11T16:12:32.554Z",
+  date: '2019-05-11T16:12:32.554Z',
   emotion: generateRandom(commentionEmotions),
 
 
-})
-const comments =Array.from({length: getRandomInteger(0, 5)}, generateComments)
-console.log(comments)
+});
+const comments =Array.from({length: getRandomInteger(0, 5)}, generateComments);
+
 export const generateFilm = () => ({
   comments: comments,
   title: generateRandom(FILMS_TITLES),
@@ -128,7 +128,7 @@ export const generateFilm = () => ({
   duration: generateDuration(),
   generes: randomArray(FILSM_GENRES),
   country: generateRandom(COUNTRY),
-  alternative_title: generateRandom(FILMS_TITLES),
+  alternativeTitle: generateRandom(FILMS_TITLES),
   writers: randomArray(WRITERS),
   actors:randomArray(ACTORS),
   isFavorite: false,

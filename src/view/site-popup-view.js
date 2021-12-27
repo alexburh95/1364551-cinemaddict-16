@@ -3,7 +3,8 @@ import { createSiteGeneresSection } from './site-generes-view';
 
 
 export const createSitePopupTemplate = (task) => {
-  const {title, poster,raiting, description, relizeYear, duration, generes, country, alternative_title,writers, actors, comments} = task;
+  // eslint-disable-next-line camelcase
+  const {title, poster,raiting, description, duration, generes, country, alternativeTitle,writers, actors, comments} = task;
   return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
       <div class="film-details__top-container">
@@ -21,7 +22,7 @@ export const createSitePopupTemplate = (task) => {
             <div class="film-details__info-head">
               <div class="film-details__title-wrap">
                 <h3 class="film-details__title">${title}</h3>
-                <p class="film-details__title-original">Original: ${alternative_title}</p>
+                <p class="film-details__title-original">Original: ${alternativeTitle}</p>
               </div>
 
               <div class="film-details__rating">
