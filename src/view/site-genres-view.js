@@ -1,17 +1,6 @@
 
 
-const generToggle = (array) => {
-  let checker;
-  if(array.length>1){
-    checker ='Genres';}
-  else{
-    checker ='Genre';
-
-  }
-
-
-  return checker;
-};
+const generToggle = (array) => (array.length>1)?'Genres':'Genre';
 
 const generateGenere = (element) => {
 

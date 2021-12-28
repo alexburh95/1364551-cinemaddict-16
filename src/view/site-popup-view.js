@@ -1,5 +1,5 @@
 
-import { createSiteGeneresSection } from './site-generes-view';
+import { createSiteGeneresSection } from './site-genres-view';
 
 
 export const createSitePopupTemplate = (task) => {
