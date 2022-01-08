@@ -1,5 +1,5 @@
 
-
+import {createElement} from '../utils.js';
 export const createSiteComments = (comments) => {
   const {author, comment, date, emotion} = comments;
   return `<li class="film-details__comment">
@@ -16,3 +16,30 @@ export const createSiteComments = (comments) => {
   </div>
   </li>`;
 };
+
+export default class CommentsCardTemplate {
+  #element = null;
+  #task = null;
+
+  constructor(task) {
+    this.#task = task;
+
+
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createSiteComments(this.#task);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

@@ -51,7 +51,7 @@ const generateComments = () => ({
 
 
 });
-const comments =Array.from({length: getRandomInteger(0, 5)}, generateComments);
+const comments =Array.from({length: getRandomInteger( DESCRIPTIONS_MIN, DESCRIPTIONS_MAX )}, generateComments);
 
 export const generateFilm = () => ({
   comments: comments,

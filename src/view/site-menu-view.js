@@ -1,3 +1,6 @@
+import {createElement} from '../utils.js';
+
+
 export const createSiteMenuTemplate = () => (
   `<nav class="main-navigation">
   <div class="main-navigation__items">
@@ -7,11 +10,25 @@ export const createSiteMenuTemplate = () => (
     <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
   </div>
   <a href="#stats" class="main-navigation__additional">Stats</a>
-</nav>
+</nav>`);
 
-<ul class="sort">
-  <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-  <li><a href="#" class="sort__button">Sort by date</a></li>
-  <li><a href="#" class="sort__button">Sort by rating</a></li>
-</ul>`
-);
+
+export default class SiteMenuView {
+  #element = null;
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createSiteMenuTemplate();
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
