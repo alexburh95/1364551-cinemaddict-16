@@ -1,5 +1,6 @@
+import {createElement} from '../utils.js';
 
-export const createFilmsCardTemplate = (task) => {
+const createFilmsCardTemplate = (task) => {
   const {title, poster,raiting, description, relizeYear, duration, generes, comments} = task;
   return `<article class="film-card">
   <a class="film-card__link">
@@ -21,3 +22,28 @@ export const createFilmsCardTemplate = (task) => {
   </div>
 </article>`;
 };
+export default class FilmsCardTemplate {
+  #element = null;
+  #task = null;
+
+  constructor(task) {
+    this.#task = task;
+
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createFilmsCardTemplate(this.#task);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

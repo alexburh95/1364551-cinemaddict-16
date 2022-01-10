@@ -1,10 +1,10 @@
+import {createElement} from '../utils.js';
 
-import { createSiteGeneresSection } from './site-genres-view';
 
+const createSitePopupTemplate = (task) => {
 
-export const createSitePopupTemplate = (task) => {
   // eslint-disable-next-line camelcase
-  const {title, poster,raiting, description, duration, generes, country, alternativeTitle,writers, actors, comments} = task;
+  const {title, poster,raiting, description, alternativeTitle,comments} = task;
   return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
       <div class="film-details__top-container">
@@ -30,34 +30,7 @@ export const createSitePopupTemplate = (task) => {
               </div>
             </div>
 
-            <table class="film-details__table">
-              <tr class="film-details__row">
-                <td class="film-details__term">Director</td>
-                <td class="film-details__cell">Anthony Mann</td>
-              </tr>
-              <tr class="film-details__row">
-                <td class="film-details__term">Writers</td>
-                <td class="film-details__cell">${writers}</td>
-              </tr>
-              <tr class="film-details__row">
-                <td class="film-details__term">Actors</td>
-                <td class="film-details__cell">${actors}</td>
-              </tr>
-              <tr class="film-details__row">
-                <td class="film-details__term">Release Date</td>
-                <td class="film-details__cell">30 March 1945</td>
-              </tr>
-              <tr class="film-details__row">
-                <td class="film-details__term">Runtime</td>
-                <td class="film-details__cell">${duration}</td>
-              </tr>
-              <tr class="film-details__row">
-                <td class="film-details__term">Country</td>
-                <td class="film-details__cell">${country}</td>
-              </tr>
-              ${createSiteGeneresSection(generes)}
 
-            </table>
 
             <p class="film-details__film-description">
               ${description}
@@ -113,5 +86,31 @@ export const createSitePopupTemplate = (task) => {
       </div>
     </form>
   </section>`;
+
 };
+export default class FilmsPopupTemplate {
+  #element = null;
+  #task = null;
+
+  constructor(task) {
+    this.#task = task;
+
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createSitePopupTemplate(this.#task);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
 
