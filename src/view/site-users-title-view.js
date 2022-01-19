@@ -1,5 +1,5 @@
+import AbstractView from './abstract-view.js';
 
-import {createElement} from '../utils.js';
 
 const createUsersTitleTemplate = () => (
   `<section class="header__profile profile">
@@ -9,22 +9,11 @@ const createUsersTitleTemplate = () => (
 );
 
 
-export default class SiteUserTitle {
-  #element = null;
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
+export default class SiteUserTitle extends AbstractView {
 
   get template() {
     return  createUsersTitleTemplate();
   }
 
-  removeElement() {
-    this.#element = null;
-  }
+
 }

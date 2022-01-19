@@ -1,4 +1,4 @@
-import { RenderPosition, renderElement} from './utils.js';
+import { RenderPosition, renderElement, remove} from './utils.js';
 import SiteMenuView from './view/site-menu-view.js';
 import FilmListTemplate  from './view/site-filmsList-view';
 import FilmsCardTemplate from './view/site-film-сard-view.js';
@@ -15,14 +15,14 @@ const siteHeader = document.querySelector('header');
 const siteMainElement = document.querySelector('.main');
 const CARDS_NUMBERS = 15;
 const TASK_COUNT_PER_STEP = 5;
-renderElement(siteHeader,  new SiteUserTitle().element,RenderPosition.BEFOREEND);
-renderElement(siteMainElement, new SiteMenuView().element, RenderPosition.BEFOREEND);
-renderElement(siteMainElement, new SiteFilterView().element, RenderPosition.BEFOREEND);
+renderElement(siteHeader,  new SiteUserTitle(),RenderPosition.BEFOREEND);
+renderElement(siteMainElement, new SiteMenuView(), RenderPosition.BEFOREEND);
+renderElement(siteMainElement, new SiteFilterView(), RenderPosition.BEFOREEND);
 
 const FilmListTemplateComponent = new FilmListTemplate();
 const FilmListContainerComponent = new FilmListContainer();
-renderElement(siteMainElement, FilmListTemplateComponent.element, RenderPosition.BEFOREEND);
-renderElement( FilmListTemplateComponent.element,  FilmListContainerComponent.element, RenderPosition.BEFOREEND);
+renderElement(siteMainElement, FilmListTemplateComponent, RenderPosition.BEFOREEND);
+renderElement( FilmListTemplateComponent,  FilmListContainerComponent, RenderPosition.BEFOREEND);
 
 const renderFilm = (FilmListElement, task) =>{
   const filmCard = new FilmsCardTemplate(task);
@@ -30,7 +30,7 @@ const renderFilm = (FilmListElement, task) =>{
 
   const body = document.querySelector('body');
 
-  filmCard.element.querySelector('.film-card__link').addEventListener('click', () =>{
+  filmCard.setEditClickHandler(() =>{
 
     body.classList.add('hide-overflow');
     document.body.appendChild(filmPopup.element);
@@ -42,22 +42,22 @@ const renderFilm = (FilmListElement, task) =>{
 
     const genreComponent = new SiteGenreTemplate(task);
 
-    renderElement(genreContainer, genreComponent.element, RenderPosition.AFTEREND);
+    renderElement(genreContainer, genreComponent, RenderPosition.AFTEREND);
 
     comments.forEach((comment) =>{
       const filmComments = new CommentsCardTemplate(comment);
-      renderElement(commentsContainer, filmComments.element,RenderPosition.BEFOREEND);
+      renderElement(commentsContainer, filmComments,RenderPosition.BEFOREEND);
     });
 
   });
 
-  filmPopup.element.querySelector('.film-details__close-btn').addEventListener('click',()=>{
+  filmPopup.setEditClickHandler(()=>{
     body.classList.remove('hide-overflow');
     document.body.removeChild(filmPopup.element);
 
   });
 
-  renderElement(FilmListElement,filmCard.element,RenderPosition.BEFOREEND);
+  renderElement(FilmListElement,filmCard,RenderPosition.BEFOREEND);
 
 
 };
@@ -66,25 +66,26 @@ const filmsListSection = document.querySelector('.films-list');
 const tasks = Array.from({length: CARDS_NUMBERS}, generateFilm);
 for (let i = 0; i <Math.min(tasks.length, TASK_COUNT_PER_STEP); i++) {
 
-  renderFilm( FilmListContainerComponent.element, tasks[i]);
+  renderFilm( FilmListContainerComponent, tasks[i]);
 
 }
 
 
 if (tasks.length > TASK_COUNT_PER_STEP) {
   let renderedTaskCount = TASK_COUNT_PER_STEP;
-  renderElement(filmsListSection, new ShowMoreButtonView().element, RenderPosition.BEFOREEND);
-  const loadMoreButton = document.querySelector('.films-list__show-more');
-  loadMoreButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
+  const loadMoreButtonComponent = new ShowMoreButtonView();
+  renderElement(filmsListSection, loadMoreButtonComponent, RenderPosition.BEFOREEND);
+
+  loadMoreButtonComponent.setClickHandler(() => {
+
     tasks
       .slice(renderedTaskCount, renderedTaskCount + TASK_COUNT_PER_STEP)
-      .forEach((task) =>renderFilm( FilmListContainerComponent.element, task) );
+      .forEach((task) =>renderFilm( FilmListContainerComponent, task) );
 
     renderedTaskCount += TASK_COUNT_PER_STEP;
 
     if (renderedTaskCount >= tasks.length) {
-      loadMoreButton.remove();
+      remove( loadMoreButtonComponent);
     }
   });
 

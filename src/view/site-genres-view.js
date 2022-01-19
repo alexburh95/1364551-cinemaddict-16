@@ -1,5 +1,5 @@
+import AbstractView from './abstract-view.js';
 
-import {createElement} from '../utils.js';
 
 const generToggle = (array) => (array.length>1)?'Genres':'Genre';
 
@@ -49,23 +49,17 @@ const createSiteGeneresSection = (task) => {
 };
 
 
-export default class SiteGenreTemplate{
-    #element = null;
+export default class SiteGenreTemplate extends AbstractView{
+
     #task = null;
 
     constructor(task) {
+      super();
       this.#task = task;
 
+
     }
 
-    get element() {
-      if (!this.#element) {
-
-        this.#element = createElement(this.template);
-      }
-
-      return this.#element;
-    }
 
     get template() {
 
@@ -73,9 +67,6 @@ export default class SiteGenreTemplate{
 
     }
 
-    removeElement() {
-      this.#element = null;
-    }
 }
 
 

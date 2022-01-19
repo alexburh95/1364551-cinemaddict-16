@@ -1,5 +1,4 @@
-
-import {createElement} from '../utils.js';
+import AbstractView from './abstract-view.js';
 export const createSiteComments = (comments) => {
   const {author, comment, date, emotion} = comments;
   return `<li class="film-details__comment">
@@ -17,29 +16,20 @@ export const createSiteComments = (comments) => {
   </li>`;
 };
 
-export default class CommentsCardTemplate {
-  #element = null;
+export default class CommentsCardTemplate  extends AbstractView {
   #task = null;
 
   constructor(task) {
+    super();
     this.#task = task;
 
 
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
 
   get template() {
     return createSiteComments(this.#task);
   }
 
-  removeElement() {
-    this.#element = null;
-  }
+
 }

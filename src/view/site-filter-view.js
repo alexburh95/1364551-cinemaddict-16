@@ -1,4 +1,5 @@
-import {createElement} from '../utils.js';
+
+import AbstractView from './abstract-view.js';
 
 
 export const createSiteFilterTemplate = () => (
@@ -9,22 +10,12 @@ export const createSiteFilterTemplate = () => (
 </ul>`);
 
 
-export default class SiteFilterView {
-  #element = null;
+export default class SiteFilterView extends AbstractView {
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
 
   get template() {
     return createSiteFilterTemplate();
   }
 
-  removeElement() {
-    this.#element = null;
-  }
+
 }
