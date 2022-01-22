@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import AbstractView from './abstract-view.js';
 
 
 const createSitePopupTemplate = (task) => {
@@ -88,29 +88,31 @@ const createSitePopupTemplate = (task) => {
   </section>`;
 
 };
-export default class FilmsPopupTemplate {
-  #element = null;
+export default class FilmsPopupTemplate extends AbstractView  {
+
   #task = null;
 
+
   constructor(task) {
+    super();
     this.#task = task;
 
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
 
   get template() {
     return createSitePopupTemplate(this.#task);
   }
 
-  removeElement() {
-    this.#element = null;
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#editClickHandler);
   }
+
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.editClick();
+  }
+
 }
 

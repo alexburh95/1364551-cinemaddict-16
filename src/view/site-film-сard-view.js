@@ -1,5 +1,5 @@
-import {createElement} from '../utils.js';
-
+import {generateRandom} from '../mock/films.js';
+import AbstractView from './abstract-view.js';
 const createFilmsCardTemplate = (task) => {
   const {title, poster,raiting, description, relizeYear, duration, generes, comments} = task;
   return `<article class="film-card">
@@ -9,7 +9,7 @@ const createFilmsCardTemplate = (task) => {
     <p class="film-card__info">
       <span class="film-card__year">${relizeYear}</span>
       <span class="film-card__duration">${duration}</span>
-      <span class="film-card__genre">${generes}</span>
+      <span class="film-card__genre">${generateRandom(generes)}</span>
     </p>
     <img src="./images/posters/${poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${description}</p>
@@ -22,28 +22,29 @@ const createFilmsCardTemplate = (task) => {
   </div>
 </article>`;
 };
-export default class FilmsCardTemplate {
-  #element = null;
+export default class FilmsCardTemplate extends AbstractView {
   #task = null;
 
   constructor(task) {
+    super();
     this.#task = task;
 
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
 
   get template() {
     return createFilmsCardTemplate(this.#task);
   }
 
-  removeElement() {
-    this.#element = null;
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.film-card__link').addEventListener('click', this.#editClickHandler);
   }
+
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.editClick();
+  }
+
+
 }

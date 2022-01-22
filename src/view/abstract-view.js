@@ -1,11 +1,13 @@
 import {createElement} from '../utils.js';
 
-const createFilmsListContainer = () => (
-  `<div class="films-list__container">
-    </div>`
-);
-export default class FilmListContainer {
+export default class AbstractView {
   #element = null;
+  _callback = {};
+  constructor() {
+    if (new.target === AbstractView) {
+      throw new Error('Can\'t instantiate AbstractView, only concrete one.');
+    }
+  }
 
   get element() {
     if (!this.#element) {
@@ -16,12 +18,12 @@ export default class FilmListContainer {
   }
 
   get template() {
-
-    return  createFilmsListContainer();
-
+    throw new Error('Abstract method not implemented: get template');
   }
 
   removeElement() {
     this.#element = null;
   }
+
+
 }
