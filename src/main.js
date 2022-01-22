@@ -1,4 +1,4 @@
-import { RenderPosition, renderElement, remove} from './utils.js';
+import { RenderPosition, render, remove} from './utils.js';
 import SiteMenuView from './view/site-menu-view.js';
 import FilmListTemplate  from './view/site-filmsList-view';
 import FilmsCardTemplate from './view/site-film-сard-view.js';
@@ -6,7 +6,7 @@ import SiteUserTitle from './view/site-users-title-view.js';
 import ShowMoreButtonView from './view/site-show-more-button-view.js';
 import  FilmsPopupTemplate  from './view/site-popup-view.js';
 import CommentsCardTemplate  from './view/site-comment-view.js';
-import FilmListContainer  from './view/site-filmListContainer-view';
+import FilmListContainer  from './view/site-film-list-container-view';
 import SiteGenreTemplate  from './view/site-genres-view';
 import SiteFilterView  from './view/site-filter-view';
 
@@ -15,14 +15,16 @@ const siteHeader = document.querySelector('header');
 const siteMainElement = document.querySelector('.main');
 const CARDS_NUMBERS = 15;
 const TASK_COUNT_PER_STEP = 5;
-renderElement(siteHeader,  new SiteUserTitle(),RenderPosition.BEFOREEND);
-renderElement(siteMainElement, new SiteMenuView(), RenderPosition.BEFOREEND);
-renderElement(siteMainElement, new SiteFilterView(), RenderPosition.BEFOREEND);
+render(siteHeader,  new SiteUserTitle(),RenderPosition.BEFOREEND);
+render(siteMainElement, new SiteMenuView(), RenderPosition.BEFOREEND);
+render(siteMainElement, new SiteFilterView(), RenderPosition.BEFOREEND);
 
 const FilmListTemplateComponent = new FilmListTemplate();
 const FilmListContainerComponent = new FilmListContainer();
-renderElement(siteMainElement, FilmListTemplateComponent, RenderPosition.BEFOREEND);
-renderElement( FilmListTemplateComponent,  FilmListContainerComponent, RenderPosition.BEFOREEND);
+
+const filsListContainer = FilmListTemplateComponent.element.querySelector('.films-list');
+render(siteMainElement, FilmListTemplateComponent, RenderPosition.BEFOREEND);
+render(filsListContainer ,  FilmListContainerComponent, RenderPosition.BEFOREEND);
 
 const renderFilm = (FilmListElement, task) =>{
   const filmCard = new FilmsCardTemplate(task);
@@ -42,11 +44,11 @@ const renderFilm = (FilmListElement, task) =>{
 
     const genreComponent = new SiteGenreTemplate(task);
 
-    renderElement(genreContainer, genreComponent, RenderPosition.AFTEREND);
+    render(genreContainer, genreComponent, RenderPosition.AFTEREND);
 
     comments.forEach((comment) =>{
       const filmComments = new CommentsCardTemplate(comment);
-      renderElement(commentsContainer, filmComments,RenderPosition.BEFOREEND);
+      render(commentsContainer, filmComments,RenderPosition.BEFOREEND);
     });
 
   });
@@ -57,7 +59,7 @@ const renderFilm = (FilmListElement, task) =>{
 
   });
 
-  renderElement(FilmListElement,filmCard,RenderPosition.BEFOREEND);
+  render(FilmListElement,filmCard,RenderPosition.BEFOREEND);
 
 
 };
@@ -74,7 +76,7 @@ for (let i = 0; i <Math.min(tasks.length, TASK_COUNT_PER_STEP); i++) {
 if (tasks.length > TASK_COUNT_PER_STEP) {
   let renderedTaskCount = TASK_COUNT_PER_STEP;
   const loadMoreButtonComponent = new ShowMoreButtonView();
-  renderElement(filmsListSection, loadMoreButtonComponent, RenderPosition.BEFOREEND);
+  render(filmsListSection, loadMoreButtonComponent, RenderPosition.BEFOREEND);
 
   loadMoreButtonComponent.setClickHandler(() => {
 
