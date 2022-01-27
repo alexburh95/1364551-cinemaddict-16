@@ -40,7 +40,7 @@ const createSitePopupTemplate = (task) => {
 
         <section class="film-details__controls">
           <button type="button" class="film-details__control-button film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-          <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watched" id="watched" name="watched">Already watched</button>
+          <button type="button" class="film-details__control-button  film-details__control-button--watched" id="watched" name="watched">Already watched</button>
           <button type="button" class="film-details__control-button film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
         </section>
       </div>
@@ -113,6 +113,39 @@ export default class FilmsPopupTemplate extends AbstractView  {
     evt.preventDefault();
     this._callback.editClick();
   }
+
+  #findControlButton = (name) => this.element.querySelector(`button[name=${name}]`)
+
+  setControlButtomClickHandler =  (name) => {
+    this.#findControlButton(name).addEventListener('click', () => this.#controlButtonCallback(name));
+  }
+
+
+  #controlButtonCallback = (name) =>{
+
+    this.#setChangeValue(name);
+    this.#etChangeColorControlButton(name);
+
+  }
+
+
+  #setChangeValue = (value) =>{
+    const name = value;
+    const toggler = this.#task[name];
+    this.#task[name] =!toggler;
+  }
+
+#etChangeColorControlButton = (name) =>{
+  const button = this.#findControlButton(name);
+
+  if(this.#task[name]){
+    button.classList.add('film-details__control-button--active');
+  }
+  else{
+    button.classList.remove('film-details__control-button--active');
+  }
+
+}
 
 }
 
