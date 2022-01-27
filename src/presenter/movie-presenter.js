@@ -10,13 +10,11 @@ import CommentsCardTemplate from '../view/site-comment-view.js';
 import ShowMoreButtonView from '../view/site-show-more-button-view.js';
 const TASK_COUNT_PER_STEP = 5;
 const body = document.querySelector('body');
-const CONTROL_BUTTONS ={
-  WATCHED :  'watched',
-  FAVORITE : 'favorite',
-  WATCHLIST : 'watchlist',
-}
-
-
+const CONTROL_BUTTONS = {
+  WATCHED: 'watched',
+  FAVORITE: 'favorite',
+  WATCHLIST: 'watchlist',
+};
 
 export default class MoviePresenter {
   #moviesContainer = null;
@@ -33,46 +31,35 @@ export default class MoviePresenter {
     this.#moviesContainer = moviesContainer;
   }
 
-
-
-
   init = (tasks) => {
     this.#tasks = [...tasks];
 
     this.#renderMovieBoard();
   };
 
-  #ckeckPopupsCount = ()=>{
-    const popup = body.querySelector('.film-details')
-    if(body.contains(popup)){
-      body.removeChild(popup)
+  #ckeckPopupsCount = () => {
+    const popup = body.querySelector('.film-details');
+    if (body.contains(popup)) {
+      body.removeChild(popup);
     }
-  }
+  };
 
   #renderFilmCard = (tasks) => {
-
     const filmCard = new FilmsCardTemplate(tasks);
     filmCard.setControlButtomClickHandler(CONTROL_BUTTONS.WATCHED);
     filmCard.setControlButtomClickHandler(CONTROL_BUTTONS.FAVORITE);
     filmCard.setControlButtomClickHandler(CONTROL_BUTTONS.WATCHLIST);
 
-
-
-
     filmCard.setEditClickHandler(() => {
       this.#ckeckPopupsCount();
       body.classList.add('hide-overflow');
       this.#renderFilmPopup(tasks);
-
     });
     render(this.#filmListContainer, filmCard, RenderPosition.BEFOREEND);
   };
 
   #renderFilmPopup = (tasks) => {
     const filmPopup = new FilmsPopupTemplate(tasks);
-
-
-
 
     filmPopup.setControlButtomClickHandler(CONTROL_BUTTONS.WATCHED);
 
@@ -83,7 +70,6 @@ export default class MoviePresenter {
     filmPopup.setEditClickHandler(() => {
       body.classList.remove('hide-overflow');
       document.body.removeChild(filmPopup.element);
-
     });
     this.#renderFilmGenreSection(tasks, filmPopup.element);
     this.#renderFilmCommented(tasks.comments, filmPopup.element);
