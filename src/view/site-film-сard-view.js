@@ -5,7 +5,7 @@ const createFilmsCardTemplate = (task) => {
   return `<article class="film-card">
   <a class="film-card__link">
   <h3 class="film-card__title">${title}</h3>
-    <p class="film-card__rating"${raiting}</p>
+    <p class="film-card__rating">${raiting}</p>
     <p class="film-card__info">
       <span class="film-card__year">${relizeYear}</span>
       <span class="film-card__duration">${duration}</span>
@@ -16,9 +16,9 @@ const createFilmsCardTemplate = (task) => {
     <span class="film-card__comments">${comments.length}</span> comments</span>
   </a>
   <div class="film-card__controls">
-    <button class="film-card__controls-item film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
-    <button class="film-card__controls-item film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
-    <button class="film-card__controls-item film-card__controls-item--favorite" type="button">Mark as favorite</button>
+    <button class="film-card__controls-item film-card__controls-item--add-to-watchlist" name="watchlist" type="button">Add to watchlist</button>
+    <button class="film-card__controls-item film-card__controls-item--mark-as-watched" name="watched" type="button">Mark as watched</button>
+    <button class="film-card__controls-item film-card__controls-item--favorite" type="button" name="favorite">Mark as favorite</button>
   </div>
 </article>`;
 };
@@ -44,6 +44,47 @@ export default class FilmsCardTemplate extends AbstractView {
   #editClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.editClick();
+  }
+
+  #findControlButton = (name) => this.element.querySelector(`button[name=${name}]`)
+
+  setControlButtomClickHandler =  (name) => {
+    this.#findControlButton(name).addEventListener('click', () => this.#controlButtonCallback(name));
+  }
+
+
+  #controlButtonCallback = (name) =>{
+
+    this.#setChangeValue(name);
+    this.#etChangeColorControlButton(name);
+
+  }
+
+
+  #setChangeValue = (value) =>{
+    const name = value;
+    const toggler = this.#task[name];
+    this.#task[name] =!toggler;
+  }
+
+#etChangeColorControlButton = (name) =>{
+  const button = this.#findControlButton(name);
+
+  if(this.#task[name]){
+    button.classList.add('film-card__controls-item--active');
+  }
+  else{
+    button.classList.remove('film-card__controls-item--active');
+  }
+
+}
+
+
+  #changeControlButton = (evt) => {
+    evt.preventDefault();
+
+    this._callback.changeControlButton();
+
   }
 
 

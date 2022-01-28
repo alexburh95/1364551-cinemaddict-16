@@ -66,6 +66,7 @@ export const generateFilm = () => ({
   alternativeTitle: generateRandom(arraysLists.FILMS_TITLES),
   writers: randomArray(arraysLists.WRITERS),
   actors:randomArray(arraysLists.ACTORS),
-  isFavorite: false,
-  isWatched: false,
+  favorite: false,
+  watched: false,
+  watchlist: false,
 });
